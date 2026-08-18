@@ -18,7 +18,6 @@ let verticalSpeed = 0;
 let isGrounded = true;
 let collectedCoins = 0;
 let hasWon = false;
-let previousHeroRight = hero.getBoundingClientRect().right;
 let lastTime = performance.now();
 
 function moveHero(direction, elapsedSeconds) {
@@ -59,9 +58,8 @@ function checkWin() {
   if (hasWon) return;
   const heroBounds = hero.getBoundingClientRect();
   const flagBounds = flag.getBoundingClientRect();
-  const passedFromLeft = previousHeroRight <= flagBounds.left &&
-    heroBounds.right > flagBounds.left;
-  if (passedFromLeft && heroBounds.bottom > flagBounds.top &&
+  const isRightOfFlag = heroBounds.right > flagBounds.left;
+  if (isRightOfFlag && heroBounds.bottom > flagBounds.top &&
       heroBounds.top < flagBounds.bottom) {
     hasWon = true;
     winMessage.hidden = false;
@@ -69,7 +67,6 @@ function checkWin() {
     finalScoreValue.textContent = collectedCoins;
     finalScore.hidden = false;
   }
-  previousHeroRight = heroBounds.right;
 }
 
 playAgain.addEventListener('click', () => {

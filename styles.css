@@ -50,15 +50,15 @@ body {
   right: 2rem;
   bottom: 18%;
   z-index: 2;
-  width: 4rem;
-  height: 10rem;
+  width: 4.5rem;
+  height: 11.5rem;
 }
 
 .flag-pole {
   position: absolute;
   bottom: 0;
-  left: 0.45rem;
-  width: 0.4rem;
+  left: 0.5rem;
+  width: 0.45rem;
   height: 100%;
   background: #f4e4b0;
 }
@@ -66,9 +66,9 @@ body {
 .flag-banner {
   position: absolute;
   top: 0.45rem;
-  left: 0.85rem;
-  width: 3rem;
-  height: 2rem;
+  left: 1rem;
+  width: 3.4rem;
+  height: 2.25rem;
   background: #d93632;
   clip-path: polygon(0 0, 100% 0, 78% 50%, 100% 100%, 0 100%);
 }
@@ -78,7 +78,7 @@ body {
   top: 42%;
   left: 50%;
   z-index: 4;
-  padding: 1rem 1.5rem;
+  padding: 1.1rem 1.65rem;
   transform: translate(-50%, -50%);
   background: var(--soil);
   border: 0.25rem solid var(--grass-light);
@@ -94,15 +94,15 @@ body {
 
 .final-score {
   position: absolute;
-  top: calc(42% - 6.5rem);
+  top: calc(42% - 7.5rem);
   left: 50%;
   z-index: 4;
-  padding: 0.65rem 1rem 0.5rem;
+  padding: 0.75rem 1.15rem 0.6rem;
   transform: translateX(-50%);
   border: 0.25rem solid var(--grass-light);
   background: var(--soil);
   color: #fff3d1;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   text-shadow: 0.08rem 0.08rem var(--soil-dark);
   box-shadow: inset 0 -0.2rem var(--soil-dark);
@@ -117,13 +117,13 @@ body {
   top: calc(42% + 4.5rem);
   left: 50%;
   z-index: 4;
-  padding: 0.65rem 1rem 0.5rem;
+  padding: 0.75rem 1.15rem 0.6rem;
   transform: translateX(-50%);
   border: 0.25rem solid var(--grass-light);
   background: var(--soil);
   color: #fff3d1;
   cursor: pointer;
-  font: 700 1rem sans-serif;
+  font: 700 1.1rem sans-serif;
   text-shadow: 0.08rem 0.08rem var(--soil-dark);
   box-shadow: inset 0 -0.2rem var(--soil-dark);
 }
@@ -165,7 +165,7 @@ body {
   width: 3rem;
   height: 3.65rem;
   left: calc(50% - 1.5rem);
-  transform: scale(1.25);
+  transform: scale(1.35);
   transform-origin: bottom center;
 }
 
