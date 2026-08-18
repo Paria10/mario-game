@@ -16,7 +16,6 @@ const levelMenuButton = document.querySelector('#level-menu-button');
 const levelMenu = document.querySelector('#level-menu');
 const levelTwoOption = document.querySelector('#level-two-option');
 const hearts = [...document.querySelectorAll('.heart')];
-const moveSpeed = 420;
 const jumpSpeed = 760;
 const gravity = 1800;
 const pressedKeys = new Set();
@@ -29,6 +28,10 @@ let levelTwo = false;
 let damagedHalves = 0;
 let fallingFromPlatform = false;
 let lastTime = performance.now();
+
+function getMoveSpeed() {
+  return Math.max(420, scene.clientWidth * 0.55);
+}
 
 function updateLevelLocks() {
   const unlocked = localStorage.getItem('level2Unlocked') === 'true';
@@ -73,7 +76,7 @@ function moveHero(direction, elapsedSeconds) {
   const sceneWidth = scene.clientWidth;
   const heroWidth = hero.offsetWidth;
   const currentLeft = hero.offsetLeft;
-  const nextLeft = currentLeft + direction * moveSpeed * elapsedSeconds;
+  const nextLeft = currentLeft + direction * getMoveSpeed() * elapsedSeconds;
   const clampedLeft = Math.max(0, Math.min(sceneWidth - heroWidth, nextLeft));
 
   hero.style.left = `${clampedLeft}px`;
