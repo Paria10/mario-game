@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mario Game Scene</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-scene" aria-label="A still game scene with a blue sky and ground">
+      <div class="score-box" aria-live="polite">Coins: <span id="score">0</span></div>
+      <div class="flag" id="flag" aria-label="Finish flag">
+        <div class="flag-banner"></div>
+        <div class="flag-pole"></div>
+      </div>
+      <div class="final-score" id="final-score" hidden>Coins collected: <span id="final-score-value">0</span></div>
+      <div class="win-message" id="win-message" role="status" hidden>YOU WIN</div>
+      <button class="play-again" id="play-again" type="button" hidden>Play Again</button>
+      <div class="cloud cloud-one" aria-hidden="true"></div>
+      <div class="cloud cloud-two" aria-hidden="true"></div>
+
+      <div class="platform platform-low" aria-hidden="true"></div>
+      <div class="platform platform-middle" aria-hidden="true"></div>
+      <div class="platform platform-high" aria-hidden="true"></div>
+
+      <div class="coin coin-one" aria-label="Coin"></div>
+      <div class="coin coin-two" aria-label="Coin"></div>
+      <div class="coin coin-three" aria-label="Coin"></div>
+      <div class="coin coin-four" aria-label="Coin"></div>
+      <div class="coin coin-five" aria-label="Coin"></div>
+
+      <div class="hero" id="hero" role="img" aria-label="Small hero with a red body and skin-colored head">
+        <div class="hero-head"></div>
+        <div class="hero-body"></div>
+      </div>
+
+      <div class="ground" aria-hidden="true">
+        <div class="grass-line"></div>
+        <div class="soil-pattern"></div>
+      </div>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>
