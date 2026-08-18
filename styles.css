@@ -88,23 +88,23 @@ body {
 
 .level-two .platform-low {
   bottom: 31%;
-  left: 12%;
+  left: 15%;
 }
 
 .level-two .platform-middle {
   bottom: 44%;
-  left: 36%;
+  left: 30%;
 }
 
 .level-two .platform-high {
   bottom: 36%;
-  left: 60%;
+  left: 45%;
 }
 
 .level-two .platform-four {
   display: block;
   bottom: 52%;
-  left: 68%;
+  left: 58%;
   width: 6rem;
 }
 
@@ -115,13 +115,13 @@ body {
 
 .level-two .platform-five {
   bottom: 63%;
-  left: 45%;
+  left: 43%;
   width: 7rem;
 }
 
 .level-two .platform-six {
   bottom: 74%;
-  left: 22%;
+  left: 28%;
   width: 6rem;
 }
 
