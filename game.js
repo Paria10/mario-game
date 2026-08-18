@@ -7,9 +7,11 @@ const score = document.querySelector('#score');
 const flag = document.querySelector('#flag');
 const winMessage = document.querySelector('#win-message');
 const playAgain = document.querySelector('#play-again');
+const nextLevel = document.querySelector('#next-level');
 const finalScore = document.querySelector('#final-score');
 const finalScoreValue = document.querySelector('#final-score-value');
 const laser = document.querySelector('#laser');
+const exitDoor = document.querySelector('#exit-door');
 const moveSpeed = 420;
 const jumpSpeed = 760;
 const gravity = 1800;
@@ -57,19 +59,18 @@ function collectCoins() {
 }
 
 function checkWin() {
-  if (levelTwo) return;
   if (hasWon) return;
   const heroBounds = hero.getBoundingClientRect();
-  const flagBounds = flag.getBoundingClientRect();
-  const isRightOfFlag = heroBounds.right > flagBounds.left;
-  if (isRightOfFlag && heroBounds.bottom > flagBounds.top &&
-      heroBounds.top < flagBounds.bottom) {
+  const finishBounds = (levelTwo ? exitDoor : flag).getBoundingClientRect();
+  const isRightOfFinish = heroBounds.right > finishBounds.left;
+  if (isRightOfFinish && heroBounds.bottom > finishBounds.top &&
+      heroBounds.top < finishBounds.bottom) {
     hasWon = true;
     winMessage.hidden = false;
     playAgain.hidden = false;
+    nextLevel.hidden = false;
     finalScoreValue.textContent = collectedCoins;
     finalScore.hidden = false;
-    enterLevelTwo();
   }
 }
 
@@ -84,6 +85,7 @@ function enterLevelTwo() {
   winMessage.hidden = true;
   finalScore.hidden = true;
   playAgain.hidden = true;
+  nextLevel.hidden = true;
   for (const coin of coins) coin.hidden = false;
   collectedCoins = 0;
   score.textContent = collectedCoins;
@@ -112,9 +114,30 @@ function moveLaserToRandomHeight() {
 moveLaserToRandomHeight();
 setInterval(moveLaserToRandomHeight, 4500);
 
-playAgain.addEventListener('click', () => {
-  window.location.reload();
-});
+function restartCurrentLevel() {
+  if (!levelTwo) {
+    window.location.reload();
+    return;
+  }
+
+  hero.style.left = '1rem';
+  heroY = 0;
+  verticalSpeed = 0;
+  isGrounded = true;
+  hasWon = false;
+  winMessage.hidden = true;
+  finalScore.hidden = true;
+  playAgain.hidden = true;
+  nextLevel.hidden = true;
+  for (const coin of coins) coin.hidden = false;
+  collectedCoins = 0;
+  score.textContent = collectedCoins;
+  moveLaserToRandomHeight();
+}
+
+playAgain.addEventListener('click', restartCurrentLevel);
+
+nextLevel.addEventListener('click', enterLevelTwo);
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
