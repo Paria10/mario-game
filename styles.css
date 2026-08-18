@@ -30,6 +30,162 @@ body {
   background: linear-gradient(var(--sky-top), var(--sky-bottom));
 }
 
+.game-scene.level-two {
+  background: #12052b;
+}
+
+.level-two .cloud,
+.level-two .flag,
+.level-two .win-message,
+.level-two .final-score,
+.level-two .play-again {
+  display: none;
+}
+
+.level-two .ground {
+  background: #241044;
+  border-top: 0.25rem solid #ff28d7;
+}
+
+.level-two .grass-line,
+.level-two .soil-pattern {
+  display: none;
+}
+
+.level-two .platform {
+  border-color: #16f2ff;
+  background: #3b137d;
+  box-shadow: 0 0 0.7rem #16f2ff;
+}
+
+.level-two .platform-low {
+  bottom: 31%;
+  left: 12%;
+}
+
+.level-two .platform-middle {
+  bottom: 44%;
+  left: 36%;
+}
+
+.level-two .platform-high {
+  bottom: 36%;
+  left: 60%;
+}
+
+.level-two .platform-four {
+  display: block;
+  bottom: 52%;
+  left: 68%;
+  width: 6rem;
+}
+
+.level-two .platform-five,
+.level-two .platform-six {
+  display: block;
+}
+
+.level-two .platform-five {
+  bottom: 63%;
+  left: 45%;
+  width: 7rem;
+}
+
+.level-two .platform-six {
+  bottom: 74%;
+  left: 22%;
+  width: 6rem;
+}
+
+.level-two .coin-one { bottom: 33.8%; left: 17%; }
+.level-two .coin-two { bottom: 20.8%; left: 28%; }
+.level-two .coin-three { bottom: 46.8%; left: 44%; }
+.level-two .coin-four { bottom: 38.8%; left: 67%; }
+.level-two .coin-five { bottom: 76.8%; left: 27%; }
+
+.level-two .coin {
+  border-color: #ff28d7;
+  background: #ff80f0;
+  box-shadow: inset 0.18rem 0 #ffd1fa, 0 0 0.65rem #ff28d7;
+}
+
+.level-two .score-box {
+  border-color: #16f2ff;
+  background: #3b137d;
+  box-shadow: inset 0 -0.25rem #170a35, 0 0 0.65rem #16f2ff;
+}
+
+.laser,
+.exit-door {
+  display: none;
+}
+
+.level-two .laser {
+  position: absolute;
+  display: block;
+  z-index: 2;
+  left: 0;
+  bottom: 18%;
+  width: 100%;
+  height: 0.35rem;
+  background: #ff234f;
+  box-shadow: 0 0 0.8rem #ff234f;
+  transform: scaleX(0);
+  transform-origin: right center;
+  animation: laser-pulse 4.5s steps(1, end) infinite;
+}
+
+.level-two .exit-door {
+  position: absolute;
+  right: 2rem;
+  bottom: 18%;
+  display: block;
+  z-index: 2;
+  width: 4.5rem;
+  height: 11.5rem;
+  background: transparent;
+}
+
+.level-two .exit-door::before {
+  position: absolute;
+  bottom: 0;
+  left: 0.5rem;
+  width: 0.45rem;
+  height: 100%;
+  background: #16f2ff;
+  box-shadow: 0 0 0.7rem #16f2ff;
+  content: '';
+}
+
+.level-two .exit-door::after {
+  position: absolute;
+  top: 0.45rem;
+  left: 1rem;
+  width: 3.4rem;
+  height: 2.25rem;
+  background: #ff28d7;
+  box-shadow: 0 0 0.8rem #ff28d7;
+  clip-path: polygon(0 0, 100% 0, 78% 50%, 100% 100%, 0 100%);
+  content: '';
+}
+
+@keyframes laser-pulse {
+  0%, 38%, 72%, 100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  39% {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+
+  49%, 70% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
 .score-box {
   position: absolute;
   top: 0.5rem;
@@ -164,7 +320,7 @@ body {
   bottom: 18%;
   width: 3rem;
   height: 3.65rem;
-  left: calc(50% - 1.5rem);
+  left: 1rem;
   transform: scale(1.35);
   transform-origin: bottom center;
 }
@@ -180,6 +336,15 @@ body {
   height: 1rem;
   border: 0.2rem solid #74401e;
   background: #c47a3c;
+}
+
+.platform-four {
+  display: none;
+}
+
+.platform-five,
+.platform-six {
+  display: none;
 }
 
 .platform-low {

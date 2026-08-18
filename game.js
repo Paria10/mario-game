@@ -9,6 +9,7 @@ const winMessage = document.querySelector('#win-message');
 const playAgain = document.querySelector('#play-again');
 const finalScore = document.querySelector('#final-score');
 const finalScoreValue = document.querySelector('#final-score-value');
+const laser = document.querySelector('#laser');
 const moveSpeed = 420;
 const jumpSpeed = 760;
 const gravity = 1800;
@@ -18,6 +19,7 @@ let verticalSpeed = 0;
 let isGrounded = true;
 let collectedCoins = 0;
 let hasWon = false;
+let levelTwo = false;
 let lastTime = performance.now();
 
 function moveHero(direction, elapsedSeconds) {
@@ -55,6 +57,7 @@ function collectCoins() {
 }
 
 function checkWin() {
+  if (levelTwo) return;
   if (hasWon) return;
   const heroBounds = hero.getBoundingClientRect();
   const flagBounds = flag.getBoundingClientRect();
@@ -66,8 +69,48 @@ function checkWin() {
     playAgain.hidden = false;
     finalScoreValue.textContent = collectedCoins;
     finalScore.hidden = false;
+    enterLevelTwo();
   }
 }
+
+function enterLevelTwo() {
+  levelTwo = true;
+  scene.classList.add('level-two');
+  hero.style.left = '1rem';
+  heroY = 0;
+  verticalSpeed = 0;
+  isGrounded = true;
+  hasWon = false;
+  winMessage.hidden = true;
+  finalScore.hidden = true;
+  playAgain.hidden = true;
+  for (const coin of coins) coin.hidden = false;
+  collectedCoins = 0;
+  score.textContent = collectedCoins;
+}
+
+function checkLaser() {
+  if (!levelTwo || getComputedStyle(laser).opacity === '0') return;
+  const heroBounds = hero.getBoundingClientRect();
+  const laserBounds = laser.getBoundingClientRect();
+  if (heroBounds.left < laserBounds.right && heroBounds.right > laserBounds.left &&
+      heroBounds.top < laserBounds.bottom && heroBounds.bottom > laserBounds.top) {
+    hero.style.left = '1rem';
+    heroY = 0;
+    verticalSpeed = 0;
+    isGrounded = true;
+  }
+}
+
+function moveLaserToRandomHeight() {
+  const minHeight = 20;
+  const maxHeight = 76;
+  const randomHeight = minHeight + Math.random() * (maxHeight - minHeight);
+  laser.style.bottom = `${randomHeight}%`;
+}
+
+moveLaserToRandomHeight();
+setInterval(moveLaserToRandomHeight, 4500);
 
 playAgain.addEventListener('click', () => {
   window.location.reload();
@@ -138,6 +181,7 @@ function update(time) {
   hero.style.bottom = `${baseBottom + heroY}px`;
   collectCoins();
   checkWin();
+  checkLaser();
 
   requestAnimationFrame(update);
 }
