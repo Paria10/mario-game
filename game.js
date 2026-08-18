@@ -12,6 +12,10 @@ const finalScore = document.querySelector('#final-score');
 const finalScoreValue = document.querySelector('#final-score-value');
 const laser = document.querySelector('#laser');
 const exitDoor = document.querySelector('#exit-door');
+const levelMenuButton = document.querySelector('#level-menu-button');
+const levelMenu = document.querySelector('#level-menu');
+const levelTwoOption = document.querySelector('#level-two-option');
+const hearts = [...document.querySelectorAll('.heart')];
 const moveSpeed = 420;
 const jumpSpeed = 760;
 const gravity = 1800;
@@ -22,7 +26,48 @@ let isGrounded = true;
 let collectedCoins = 0;
 let hasWon = false;
 let levelTwo = false;
+let damagedHalves = 0;
+let fallingFromPlatform = false;
 let lastTime = performance.now();
+
+function updateLevelLocks() {
+  const unlocked = localStorage.getItem('level2Unlocked') === 'true';
+  levelTwoOption.disabled = !unlocked;
+  levelTwoOption.querySelector('.level-lock').hidden = unlocked;
+}
+
+function resetHearts() {
+  damagedHalves = 0;
+  fallingFromPlatform = false;
+  updateHearts();
+}
+
+function updateHearts() {
+  hearts.forEach((heart, index) => {
+    const damageForHeart = damagedHalves - index * 2;
+    heart.classList.toggle('damaged', damageForHeart === 1);
+    heart.classList.toggle('empty', damageForHeart >= 2);
+  });
+}
+
+function damageHeart() {
+  if (damagedHalves >= hearts.length * 2) return;
+  damagedHalves += 1;
+  updateHearts();
+
+  if (damagedHalves === hearts.length * 2) {
+    hasWon = true;
+    winMessage.textContent = 'GAME OVER';
+    finalScoreValue.textContent = collectedCoins;
+    finalScore.hidden = false;
+    winMessage.hidden = false;
+    playAgain.hidden = false;
+    nextLevel.hidden = levelTwo;
+    nextLevel.disabled = localStorage.getItem('level2Unlocked') !== 'true';
+  }
+}
+
+updateLevelLocks();
 
 function moveHero(direction, elapsedSeconds) {
   const sceneWidth = scene.clientWidth;
@@ -66,6 +111,11 @@ function checkWin() {
   if (isRightOfFinish && heroBounds.bottom > finishBounds.top &&
       heroBounds.top < finishBounds.bottom) {
     hasWon = true;
+    winMessage.textContent = 'YOU WIN';
+    if (!levelTwo) {
+      localStorage.setItem('level2Unlocked', 'true');
+      updateLevelLocks();
+    }
     winMessage.hidden = false;
     playAgain.hidden = false;
     nextLevel.hidden = false;
@@ -82,6 +132,8 @@ function enterLevelTwo() {
   verticalSpeed = 0;
   isGrounded = true;
   hasWon = false;
+  winMessage.textContent = 'YOU WIN';
+  resetHearts();
   winMessage.hidden = true;
   finalScore.hidden = true;
   playAgain.hidden = true;
@@ -125,6 +177,8 @@ function restartCurrentLevel() {
   verticalSpeed = 0;
   isGrounded = true;
   hasWon = false;
+  winMessage.textContent = 'YOU WIN';
+  resetHearts();
   winMessage.hidden = true;
   finalScore.hidden = true;
   playAgain.hidden = true;
@@ -137,7 +191,29 @@ function restartCurrentLevel() {
 
 playAgain.addEventListener('click', restartCurrentLevel);
 
-nextLevel.addEventListener('click', enterLevelTwo);
+nextLevel.addEventListener('click', () => {
+  if (!nextLevel.disabled) enterLevelTwo();
+});
+
+levelMenuButton.addEventListener('click', () => {
+  levelMenu.hidden = !levelMenu.hidden;
+  levelMenuButton.setAttribute('aria-expanded', String(!levelMenu.hidden));
+});
+
+levelMenu.addEventListener('click', (event) => {
+  const selectedButton = event.target.closest('button');
+  if (!selectedButton) return;
+  const selectedLevel = selectedButton.dataset.level;
+  if (!selectedLevel) return;
+  if (selectedButton.disabled) return;
+  levelMenu.hidden = true;
+  levelMenuButton.setAttribute('aria-expanded', 'false');
+  if (selectedLevel === '1' && levelTwo) {
+    window.location.reload();
+  } else if (selectedLevel === '2' && !levelTwo) {
+    enterLevelTwo();
+  }
+});
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -191,13 +267,18 @@ function update(time) {
   }
 
   if (!landed) {
+    if (heroY > 0 && verticalSpeed <= 0) {
+      fallingFromPlatform = true;
+    }
     isGrounded = false;
     verticalSpeed -= gravity * elapsedSeconds;
     heroY += verticalSpeed * elapsedSeconds;
     if (heroY <= 0) {
+      if (fallingFromPlatform) damageHeart();
       heroY = 0;
       verticalSpeed = 0;
       isGrounded = true;
+      fallingFromPlatform = false;
     }
   }
 

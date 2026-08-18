@@ -9,6 +9,18 @@
   <body>
     <main class="game-scene" aria-label="A still game scene with a blue sky and ground">
       <div class="score-box" aria-live="polite">Coins: <span id="score">0</span></div>
+      <div class="hearts" aria-label="Three hearts">
+        <span class="heart" id="heart-one"></span>
+        <span class="heart" id="heart-two"></span>
+        <span class="heart" id="heart-three"></span>
+      </div>
+      <button class="level-menu-button" id="level-menu-button" type="button" aria-label="Open level list" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="level-menu" id="level-menu" aria-label="Level list" hidden>
+        <button type="button" data-level="1">Level 1</button>
+        <button type="button" data-level="2" id="level-two-option"><span>Level 2</span> <span class="level-lock" aria-label="Locked">🔒</span></button>
+      </nav>
       <div class="flag" id="flag" aria-label="Finish flag">
         <div class="flag-banner"></div>
         <div class="flag-pole"></div>
